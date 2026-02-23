@@ -16,6 +16,7 @@ import { Color, Matrix4 } from "three";
 import { color, fog, rangeFogFactor } from "three/tsl";
 import { ObjectWater } from "./Objects/ObjectWater.tsx";
 import { AvatarLobsterAI } from "./CanvasGPU/Lobster.tsx";
+import { QRCodeCanvas } from "qrcode.react";
 
 function App() {
   return (
@@ -28,29 +29,29 @@ function App() {
 
         <Suspense fallback={null}>
           <Environment environmentIntensity={0.5} files={[`/hdr/sky.hdr`]} />
-          <group scale={70}>
-            <group position={[0.3, 0.9 + 0.2, 3]}>
-              <AvatarLobsterAI
-                lobsterURL={`/avatar/lobsters/cowboy/mixamo-cowbody-rigged-transformed.glb`}
-              ></AvatarLobsterAI>
+          <group position={[2, 0.9 + 0.3 + 2, 5].map((r) => r * 50) as any}>
+            <group scale={50} rotation={[0, -0.5, 0]}>
+              <Float floatIntensity={10}>
+                <Sphere
+                  position={[0, -0.5 + 0.3, 0]}
+                  args={[1, 128, 128]}
+                  scale={1.5}
+                >
+                  <meshPhysicalMaterial
+                    transmission={1}
+                    roughness={0}
+                    metalness={0}
+                    thickness={0.95}
+                  ></meshPhysicalMaterial>
+                </Sphere>
+
+                <AvatarLobsterAI
+                  lobsterURL={`/avatar/lobsters/cowboy/mixamo-cowbody-rigged-transformed.glb`}
+                ></AvatarLobsterAI>
+              </Float>
             </group>
           </group>
-          <Suspense
-            fallback={
-              <group>
-                <Float floatIntensity={500}>
-                  <Sphere position={[0, 0, 0]} args={[1, 128, 128]} scale={300}>
-                    <meshPhysicalMaterial
-                      transmission={1}
-                      roughness={0}
-                      metalness={0}
-                      thickness={1}
-                    ></meshPhysicalMaterial>
-                  </Sphere>
-                </Float>
-              </group>
-            }
-          >
+          <Suspense fallback={<group></group>}>
             <Gltf
               castShadow
               receiveShadow
@@ -67,6 +68,11 @@ function App() {
           </Suspense>
         </Suspense>
       </CanvasGPU>
+      <div className=" absolute top-2 right-2  bg-white">
+        <div className="p-3">
+          <QRCodeCanvas value={`${location.href}`}></QRCodeCanvas>
+        </div>
+      </div>
     </>
   );
 }
