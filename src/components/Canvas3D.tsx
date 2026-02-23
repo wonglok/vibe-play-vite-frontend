@@ -1,16 +1,22 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, MeshReflectorMaterial } from "@react-three/drei";
 
 function WaterObject() {
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.5, 0]}>
-      <planeGeometry args={[20, 20, 32, 32]} />
-      <meshStandardMaterial
+      <planeGeometry args={[20, 20]} />
+      <MeshReflectorMaterial
+        blur={[300, 100]}
+        resolution={1024}
+        mixBlur={1}
+        mixStrength={50}
+        roughness={1}
+        depthScale={1.2}
+        minDepthThreshold={0.4}
+        maxDepthThreshold={1.4}
         color="#0077be"
-        transparent
-        opacity={0.7}
-        roughness={0.1}
-        metalness={0.8}
+        metalness={0.5}
+        mirror={0.5}
       />
     </mesh>
   );
