@@ -31,7 +31,7 @@ function App() {
           <Environment environmentIntensity={0.5} files={[`/hdr/sky.hdr`]} />
           <group position={[2, 0.9 + 0.3 + 2, 5].map((r) => r * 50) as any}>
             <group scale={50} rotation={[0, -0.5, 0]}>
-              <Float floatIntensity={10}>
+              <Float floatIntensity={3} speed={2}>
                 <Sphere
                   position={[0, -0.5 + 0.3, 0]}
                   args={[1, 128, 128]}
@@ -46,7 +46,42 @@ function App() {
                 </Sphere>
 
                 <AvatarLobsterAI
+                  key="guy"
                   lobsterURL={`/avatar/lobsters/cowboy/mixamo-cowbody-rigged-transformed.glb`}
+                ></AvatarLobsterAI>
+
+                {/* <AvatarLobsterAI
+                  key="lady"
+                  lobsterURL={`/avatar/lobsters/lady-withdress/lady-mixamo-transformed.glb`}
+                ></AvatarLobsterAI> */}
+              </Float>
+            </group>
+          </group>
+
+          <group position={[-2, 0 + 0.3 + 2, 5].map((r) => r * 50) as any}>
+            <group scale={50} rotation={[0, -0.5, 0]}>
+              <Float floatIntensity={3} speed={2}>
+                <Sphere
+                  position={[0, -0.5 + 0.3, 0]}
+                  args={[1, 128, 128]}
+                  scale={1.5}
+                >
+                  <meshPhysicalMaterial
+                    transmission={1}
+                    roughness={0}
+                    metalness={0}
+                    thickness={0.95}
+                  ></meshPhysicalMaterial>
+                </Sphere>
+
+                {/* <AvatarLobsterAI
+                  key="guy"
+                  lobsterURL={`/avatar/lobsters/cowboy/mixamo-cowbody-rigged-transformed.glb`}
+                ></AvatarLobsterAI> */}
+
+                <AvatarLobsterAI
+                  key="lady"
+                  lobsterURL={`/avatar/lobsters/lady-withdress/lady-mixamo-transformed.glb`}
                 ></AvatarLobsterAI>
               </Float>
             </group>
@@ -64,6 +99,8 @@ function App() {
               enableZoom={true}
               enablePan={false}
               makeDefault
+              maxPolarAngle={Math.PI * 0.5}
+              minPolarAngle={0}
             ></OrbitControls>
           </Suspense>
         </Suspense>
@@ -90,6 +127,7 @@ function Fog() {
         color(new Color(skyColor)),
         rangeFogFactor(750, 1500),
       );
+
       scene.backgroundNode = color(new Color(skyColor));
     }
   }, [scene]);
