@@ -3,6 +3,7 @@ import "./App.css";
 import { Suspense, useEffect } from "react";
 import { CanvasGPU } from "./CanvasGPU/CanvasGPU.tsx";
 import {
+  Center,
   Environment,
   Float,
   Gltf,
@@ -14,6 +15,7 @@ import { useThree } from "@react-three/fiber";
 import { Color, Matrix4 } from "three";
 import { color, fog, rangeFogFactor } from "three/tsl";
 import { ObjectWater } from "./Objects/ObjectWater.tsx";
+import { AvatarLobsterAI } from "./CanvasGPU/Lobster.tsx";
 
 function App() {
   return (
@@ -26,37 +28,43 @@ function App() {
 
         <Suspense fallback={null}>
           <Environment environmentIntensity={0.5} files={[`/hdr/sky.hdr`]} />
-        </Suspense>
-
-        <Suspense
-          fallback={
-            <group>
-              <Float floatIntensity={500}>
-                <Sphere position={[0, 0, 0]} args={[1, 128, 128]} scale={300}>
-                  <meshPhysicalMaterial
-                    transmission={1}
-                    roughness={0}
-                    metalness={0}
-                    thickness={1}
-                  ></meshPhysicalMaterial>
-                </Sphere>
-              </Float>
+          <group scale={70}>
+            <group position={[0.3, 0.9 + 0.2, 3]}>
+              <AvatarLobsterAI
+                lobsterURL={`/avatar/lobsters/cowboy/mixamo-cowbody-rigged-transformed.glb`}
+              ></AvatarLobsterAI>
             </group>
-          }
-        >
-          <Gltf
-            castShadow
-            receiveShadow
-            scale={1}
-            src={`/config/hongkong-transformed.glb`}
-          ></Gltf>
+          </group>
+          <Suspense
+            fallback={
+              <group>
+                <Float floatIntensity={500}>
+                  <Sphere position={[0, 0, 0]} args={[1, 128, 128]} scale={300}>
+                    <meshPhysicalMaterial
+                      transmission={1}
+                      roughness={0}
+                      metalness={0}
+                      thickness={1}
+                    ></meshPhysicalMaterial>
+                  </Sphere>
+                </Float>
+              </group>
+            }
+          >
+            <Gltf
+              castShadow
+              receiveShadow
+              scale={1}
+              src={`/config/hongkong-transformed.glb`}
+            ></Gltf>
 
-          <OrbitControls
-            //
-            enableZoom={true}
-            enablePan={false}
-            makeDefault
-          ></OrbitControls>
+            <OrbitControls
+              //
+              enableZoom={true}
+              enablePan={false}
+              makeDefault
+            ></OrbitControls>
+          </Suspense>
         </Suspense>
       </CanvasGPU>
     </>
