@@ -11,7 +11,7 @@ import {
 } from "@react-three/drei";
 import { BloomPipeline } from "./CanvasGPU/BloomPipeline.tsx";
 import { useThree } from "@react-three/fiber";
-import { Color, DoubleSide, Matrix4 } from "three";
+import { Color, Matrix4 } from "three";
 import { color, fog, rangeFogFactor } from "three/tsl";
 import { ObjectWater } from "./Objects/ObjectWater.tsx";
 
