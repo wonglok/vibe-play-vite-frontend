@@ -68,9 +68,9 @@ function App() {
           </Suspense>
         </Suspense>
       </CanvasGPU>
-      <div className=" absolute top-2 right-2  bg-white">
+      <div className=" absolute top-2 right-2 rounded-2xl  bg-white">
         <div className="p-3">
-          <QRCodeCanvas value={`${location.href}`}></QRCodeCanvas>
+          {location && <QRCodeCanvas value={`${location.href}`}></QRCodeCanvas>}
         </div>
       </div>
     </>
